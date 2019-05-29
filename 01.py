@@ -11,10 +11,11 @@ def collision(a, b, r):
         sinA = dy / (2 * r)
         # iloczyn skalarny wektorów
         a.velocity = a.velocity - (dot(a.velocity - b.velocity, a.pos - b.pos) / dist ** 2) * (a.pos - b.pos)
-        b.velocity = b.velocity - (dot(b.velocity - a.velocity, b.pos - a.pos) / dist ** 2) * (b.pos - a.pos)
+        tempA = a.velocity
+        b.velocity = b.velocity - (dot(b.velocity - tempA, b.pos - a.pos) / dist ** 2) * (b.pos - a.pos)
+        print("****COLLISION****")
         print("a v = ", a.velocity)
         print("b v = ", b.velocity)
-        print("****COLLISION****")
         while dist <= 2:
             a.pos += a.velocity
             b.pos += b.velocity
@@ -35,16 +36,16 @@ ball_2.velocity = vector(0.05, 2, 0)
 t = 0
 dt = 0.05
 while t < 700:
-    rate(10)
+    rate(100)
     collision(ball_1, ball_2, radius)
     ball_1.pos += ball_1.velocity
     ball_2.pos += ball_2.velocity
     if ball_1.pos.x >= 15 or ball_1.pos.x <= -15:
         ball_1.velocity.x = -ball_1.velocity.x
-        ball_1.pos += ball_1.velocity;
+        ball_1.pos += ball_1.velocity
     if ball_1.pos.y >= 15 or ball_1.pos.y <= -15:
         ball_1.velocity.y = -ball_1.velocity.y
-        ball_1.pos += ball_1.velocity;
+        ball_1.pos += ball_1.velocity
     if ball_2.pos.x >= 15 or ball_2.pos.x <= -15:
         ball_2.velocity.x = -ball_2.velocity.x
         ball_2.pos += ball_2.velocity
@@ -53,6 +54,6 @@ while t < 700:
         ball_2.pos += ball_2.velocity
 
     t += dt
+    print("____POSITIONS_____")
     print("ball_1.pos = ", ball_1.pos)
     print("ball_2.pos = ", ball_2.pos)
-    print("____POSITIONS_____")
